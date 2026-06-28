@@ -1,3 +1,24 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/worksync
+    username: postgres
+    password: 732526
+
+    jpa:
+      hibernate:
+        ddl-auto: validate
+        properties:
+          hibernate:
+            format-sql: true
+        open-in-view: false
+
+
   application:
     name: worksync-backend
+
+  server:
+    port: 8080
+
+  logging:
+    level:
+      org.hibernate.SQL: DEBUG
