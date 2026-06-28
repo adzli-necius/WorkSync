@@ -1,4 +1,4 @@
-package com.worksync.backend.constant;
+package com.worksync.backend.common.constant;
 
 public class ApiConstant {
     public static final String API_V1 = "/api/v1";

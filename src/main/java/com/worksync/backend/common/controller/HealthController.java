@@ -1,6 +1,6 @@
 package com.worksync.backend.common.controller;
 
-import com.worksync.backend.constant.ApiConstant;
+import com.worksync.backend.common.constant.ApiConstant;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
