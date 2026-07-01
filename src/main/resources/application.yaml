@@ -3,9 +3,9 @@ spring:
     restart:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/worksync
+    url: jdbc:postgresql://localhost:5433/worksync
     username: postgres
-    password: 732526
+    password: postgres
 
     jpa:
       hibernate:
