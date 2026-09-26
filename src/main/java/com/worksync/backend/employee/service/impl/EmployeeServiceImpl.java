@@ -8,6 +8,8 @@ import com.worksync.backend.employee.entity.Employee;
 import com.worksync.backend.employee.repository.EmployeeRepository;
 import com.worksync.backend.employment.entity.EmploymentStatus;
 import com.worksync.backend.employment.repository.EmploymentStatusRepository;
+import com.worksync.backend.kafka.event.EmployeeCreatedEvent;
+import com.worksync.backend.kafka.producer.EmployeeProducer;
 import com.worksync.backend.position.entity.Position;
 import com.worksync.backend.position.repository.PositionRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
     private final PositionRepository positionRepository;
     private final EmploymentStatusRepository employmentStatusRepository;
+    private final EmployeeProducer employeeProducer;
 
     @Override
     public CreateEmployeeResponse createEmployee(CreateEmployeeRequest request) {
@@ -49,6 +52,16 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .build();
 
         Employee savedEmployee = employeeRepository.save(employee);
+
+        EmployeeCreatedEvent event = EmployeeCreatedEvent.builder()
+                .employeeNo(savedEmployee.getEmployeeNo())
+                .fullName(savedEmployee.getFullName())
+                .workEmail(savedEmployee.getWorkEmail())
+                .department(savedEmployee.getDepartment().getName())
+                .position(savedEmployee.getPosition().getName())
+                .build();
+
+        employeeProducer.publish(event);
 
         return CreateEmployeeResponse.builder()
                 .employeeNo(savedEmployee.getEmployeeNo())
